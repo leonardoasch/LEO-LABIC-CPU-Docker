@@ -11,10 +11,6 @@ from kafka import KafkaConsumer
 from kafka import KafkaProducer
 
 
-'''
-Author: Clayton Kossoski - 17-jun-2020
-Exemplo Kafka Consumer - Big Data Labic
-'''
 import sys
 import base64
 import json
