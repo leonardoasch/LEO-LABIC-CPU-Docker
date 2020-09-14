@@ -18,9 +18,9 @@ from json import loads
 from PIL import Image
 from io import BytesIO
 
-#topic = "leonardo-stream"
-topic = "leonardo-stream-5"
-producer_topic = "leonardo-stream"
+topic = "leonardo-stream"
+#topic = "leonardo-stream-5"
+producer_topic = "leonardo-stream-2"
 
 
 consumer = KafkaConsumer(
