@@ -44,8 +44,8 @@ linger_ms=5
 
 conf = 0.2 #confidence
 
-prototxt = "MobileNetSSD_deploy.prototxt.txt"
-model = "MobileNetSSD_deploy.caffemodel" 
+prototxt = "./app/MobileNetSSD_deploy.prototxt.txt"
+model = "./app/MobileNetSSD_deploy.caffemodel" 
 
 
 CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
