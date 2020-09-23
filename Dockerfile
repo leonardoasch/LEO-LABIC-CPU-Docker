@@ -12,5 +12,6 @@ RUN pip3 install Pillow==2.1.0
 RUN apt install -y libgl1-mesa-glx
 
 RUN git clone https://github.com/leonardoasch/LEO-LABIC-CPU-Docker.git app
+RUN echo "10.0.10.11 bigdata_cpu01" >> /etc/hosts
 
 CMD ["python3","./app/main.py"]
