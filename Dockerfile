@@ -8,7 +8,7 @@ RUN cd /usr/local/bin
 RUN ln -s /usr/bin/python3 python
 RUN pip3 install --upgrade pip
 RUN pip3 install pymongo kafka-python opencv-python pytz
-RUN pip3 install Pillow==2.1.0
+RUN pip3 install Pillow
 RUN apt install -y libgl1-mesa-glx
 
 RUN git clone https://github.com/leonardoasch/LEO-LABIC-CPU-Docker.git app
