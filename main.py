@@ -58,10 +58,12 @@ net = cv2.dnn.readNetFromCaffe(prototxt, model)
 
 
 
-
 def stringToRGB(base64_string):
     imgdata = base64.b64decode(str(base64_string))
-    image = cv2.imread(BytesIO(imgdata))
+    try:
+          image = cv2.imread(BytesIO(imgdata))
+    except:
+          return 0
     #image = Image.open(BytesIO(imgdata))
     return cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
 
@@ -132,6 +134,9 @@ for message in consumer:
     
     
     frame = stringToRGB(message['data'])
+
+    if frame == 0:
+          continue
         
     
     name = message['name']
