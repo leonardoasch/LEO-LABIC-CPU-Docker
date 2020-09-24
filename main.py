@@ -61,7 +61,7 @@ net = cv2.dnn.readNetFromCaffe(prototxt, model)
 
 def stringToRGB(base64_string):
     imgdata = base64.b64decode(str(base64_string))
-    image = cv2.open(BytesIO(imgdata))
+    image = cv2.imread(BytesIO(imgdata))
     #image = Image.open(BytesIO(imgdata))
     return cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
 
