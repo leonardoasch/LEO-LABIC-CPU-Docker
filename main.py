@@ -134,8 +134,8 @@ for message in consumer:
     
     name = message['name']
     
-    print(name)
-    print(message['timestamp'])
+    #print(name)
+    #print(message['timestamp'])
     
 
     (h, w) = frame.shape[:2]
