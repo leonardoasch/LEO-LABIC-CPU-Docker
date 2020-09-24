@@ -60,12 +60,12 @@ net = cv2.dnn.readNetFromCaffe(prototxt, model)
 
 def stringToRGB(base64_string):
     imgdata = base64.b64decode(str(base64_string))
+    image = Image.open(BytesIO(imgdata))
     try:
-          image = cv2.imread(BytesIO(imgdata))
+         return cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)          
     except:
-          return 0
-    #image = Image.open(BytesIO(imgdata))
-    return cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
+         return 0
+    
 
 def correct_encoding(dictionary):
     """Correct the encoding of python dictionaries so they can be encoded to mongodb
