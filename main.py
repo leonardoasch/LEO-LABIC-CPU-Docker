@@ -60,11 +60,9 @@ net = cv2.dnn.readNetFromCaffe(prototxt, model)
 
 def stringToRGB(base64_string):
     imgdata = base64.b64decode(str(base64_string))
+    print(base64_string)
     image = Image.open(BytesIO(imgdata))
-    try:
-         return cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)          
-    except:
-         return 0
+    return cv2.cvtColor(np.array(image).astype(np.uint8), cv2.COLOR_BGR2RGB)         
     
 
 def correct_encoding(dictionary):
