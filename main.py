@@ -168,7 +168,8 @@ for message in consumer:
                          "data": message['data'],
                          "videoid":message['name'],
                          "bbox": {"StartX":startX, "StartY":startY, "EndX":endX, "EndY":endY},
-                         "timestamp": str(datetime.now())}
+                         "timestamp": str(datetime.now()),
+                         "video_time": message['time']}
                          
                 new_insert = correct_encoding(new_insert)
                          
