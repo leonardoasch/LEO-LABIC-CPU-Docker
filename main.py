@@ -175,7 +175,7 @@ for message in consumer:
                          
                 idfind=mycol.insert_one(new_insert) 
                 
-                send_kafka(message['timestamp'],str(idfind.inserted_id))
+                send_kafka(message['time'],str(idfind.inserted_id))
                 
                 #try:
                 #    cv2.imwrite(path_resultado+'/'+str(idfind)+".jpg", roi)
