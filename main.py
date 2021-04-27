@@ -25,7 +25,7 @@ producer_topic = "leonardo-stream-2"
 
 consumer = KafkaConsumer(
      topic,
-     bootstrap_servers=['10.0.10.1:9092'],
+     bootstrap_servers=['10.0.10.11:9092'],
      auto_offset_reset='earliest',
      enable_auto_commit=True,
      group_id='my-group',
@@ -35,7 +35,7 @@ consumer = KafkaConsumer(
 
      
 # Start up producer
-producer = KafkaProducer(bootstrap_servers='10.0.10.1:9092',
+producer = KafkaProducer(bootstrap_servers='10.0.10.11:9092',
 compression_type='gzip',
 linger_ms=5
 )
