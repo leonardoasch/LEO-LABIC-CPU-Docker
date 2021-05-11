@@ -120,15 +120,21 @@ path_resultado = "images"
 if os.path.isdir(path_resultado) == False:
     os.mkdir(path_resultado)
     
-
+nome_video = "none"
 
 for message in consumer:
+     
+     
+     
 
     #continue
     startt = time.time()
     
     message = message.value
     
+    if (nome_video != message["name"]:
+        nome_video = message["name"]
+        frames = 0
     
     frame = stringToRGB(message['data'])
     
