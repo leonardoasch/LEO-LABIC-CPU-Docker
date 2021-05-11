@@ -132,7 +132,7 @@ for message in consumer:
     
     message = message.value
     
-    if (nome_video != message["name"]:
+    if (nome_video != message["name"]):
         nome_video = message["name"]
         frames = 0
     
