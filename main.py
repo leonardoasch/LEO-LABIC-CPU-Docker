@@ -42,7 +42,7 @@ linger_ms=5
 
 
 
-conf = 0.6 #confidence
+conf = 0.4 #confidence
 
 prototxt = "/app/MobileNetSSD_deploy.prototxt.txt"
 model = "/app/MobileNetSSD_deploy.caffemodel" 
