@@ -189,7 +189,7 @@ for message in consumer:
     #print("[INFO] computing object detections…")
     net.setInput(blob)
     detections = net.forward()
-    detections = nms(detections, 0.2) 
+    #detections = nms(detections, 0.2) 
     for i in np.arange(0, detections.shape[2]):
          confidence = detections[0, 0, i, 2]
          
