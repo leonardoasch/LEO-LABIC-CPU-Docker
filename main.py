@@ -14,7 +14,6 @@ from deep_sort import preprocessing
 from deep_sort import nn_matching
 from deep_sort.detection import Detection
 from deep_sort.tracker import Tracker
-from tools import generate_detections as gdet
 
 import sys
 import base64
@@ -174,7 +173,6 @@ nms_max_overlap = 1.0
 
 #initialize deep sort
 model_filename = 'model_data/mars-small128.pb'
-encoder = gdet.create_box_encoder(model_filename, batch_size=1)
 metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance, nn_budget)
 tracker = Tracker(metric)
 
