@@ -10,6 +10,11 @@ from pymongo import MongoClient
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
 
+from deep_sort import preprocessing
+from deep_sort import nn_matching
+from deep_sort.detection import Detection
+from deep_sort.tracker import Tracker
+from tools import generate_detections as gdet
 
 import sys
 import base64
@@ -162,10 +167,19 @@ if os.path.isdir(path_resultado) == False:
     
 nome_video = "none"
 
+# Definition of the parameters
+max_cosine_distance = 0.5
+nn_budget = None
+nms_max_overlap = 1.0
+
+#initialize deep sort
+model_filename = 'model_data/mars-small128.pb'
+encoder = gdet.create_box_encoder(model_filename, batch_size=1)
+metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance, nn_budget)
+tracker = Tracker(metric)
+
 for message in consumer:
-     
-     
-     
+        
 
     #continue
     startt = time.time()
@@ -190,6 +204,11 @@ for message in consumer:
     net.setInput(blob)
     detections = net.forward()
     #detections = nms(detections, 0.2) 
+    
+
+    # Call the tracker
+    tracker.predict()
+    tracker.update(detections)
     for i in np.arange(0, detections.shape[2]):
          confidence = detections[0, 0, i, 2]
          
