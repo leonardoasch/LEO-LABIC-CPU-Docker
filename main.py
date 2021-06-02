@@ -10,10 +10,7 @@ from pymongo import MongoClient
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
 
-from deep_sort import preprocessing
-from deep_sort import nn_matching
-from deep_sort.detection import Detection
-from deep_sort.tracker import Tracker
+
 
 import sys
 import base64
@@ -166,18 +163,10 @@ if os.path.isdir(path_resultado) == False:
     
 nome_video = "none"
 
-# Definition of the parameters
-max_cosine_distance = 0.5
-nn_budget = None
-nms_max_overlap = 1.0
-
-#initialize deep sort
-model_filename = 'model_data/mars-small128.pb'
-metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance, nn_budget)
-tracker = Tracker(metric)
 
 for message in consumer:
-        
+    
+    
 
     #continue
     startt = time.time()
@@ -203,10 +192,7 @@ for message in consumer:
     detections = net.forward()
     #detections = nms(detections, 0.2) 
     
-
-    # Call the tracker
-    tracker.predict()
-    tracker.update(detections)
+    
     for i in np.arange(0, detections.shape[2]):
          confidence = detections[0, 0, i, 2]
          
@@ -218,6 +204,8 @@ for message in consumer:
                 (startX, startY, endX, endY) = box.astype("int")
                 label = "{}: {:.2f}%".format(CLASSES[idx], confidence * 100)     
                 #print("[INFO] {}".format(label))
+                
+                    
                 
                 cv2.rectangle(frame, (startX, startY), (endX, endY),COLORS[idx], 2)     
                 y = startY - 15 if startY - 15 > 15 else startY + 15     
@@ -240,12 +228,12 @@ for message in consumer:
                 idfind=mycol.insert_one(new_insert) 
                 
                 send_kafka(message['time'],str(idfind.inserted_id))
-                
-                #try:
-                #    cv2.imwrite(path_resultado+'/'+str(idfind)+".jpg", roi)
+    
+                 #try:
+                 #    cv2.imwrite(path_resultado+'/'+str(idfind)+".jpg", roi)
                 #except:
                 #    continue
-
+          
                 #print(str(idfind))   
 
 
