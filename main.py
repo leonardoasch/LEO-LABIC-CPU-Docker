@@ -10,6 +10,8 @@ from pymongo import MongoClient
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
 
+from centroidtracker import CentroidTracker
+
 
 
 import sys
@@ -123,6 +125,9 @@ if os.path.isdir(path_resultado) == False:
     
 nome_video = "none"
 
+ct = CentroidTracker()
+(H, W) = (None, None)
+
 
 for message in consumer:
     
@@ -140,6 +145,8 @@ for message in consumer:
     frame = stringToRGB(message['data'])
     
     name = message['name']
+    rects = []
+    inserts = []
     
     #print(name)
     #print(message['timestamp'])
@@ -162,8 +169,9 @@ for message in consumer:
                 person +=1
                 box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
                 (startX, startY, endX, endY) = box.astype("int")
-                label = "{}: {:.2f}%".format(CLASSES[idx], confidence * 100)     
+                label = "{}: {:.2f}%".format(CLASSES[idx], confidence * 100)      
                 #print("[INFO] {}".format(label))
+                rects.append(box.astype("int"))
                 
                     
                 
@@ -185,7 +193,8 @@ for message in consumer:
                          
                 new_insert = correct_encoding(new_insert)
                          
-                idfind=mycol.insert_one(new_insert) 
+                idfind=mycol.insert_one(new_insert)
+                inserts.append(str(idfind.inserted_id))
                 
                 send_kafka(message['time'],str(idfind.inserted_id))
     
@@ -197,6 +206,18 @@ for message in consumer:
                 #print(str(idfind))   
 
 
+    # update our centroid tracker using the computed set of bounding
+	# box rectangles
+    objects = ct.update(rects)
+    k = 0
+
+	# loop over the tracked objects
+    for (objectID, centroid) in objects.items():
+        # draw both the ID of the object and the centroid of the
+        # object on the output frame
+        mycol.update_one({'_id': ObjectId(inserts[k])}, {'$set': {"trackid": objectID}})
+        k = k + 1
+        
     #end_time = time.time()
     frames += 1
     #print("FPS of the video is {:5.2f}".format( frames / (end_time - start_time)))
