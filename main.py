@@ -107,7 +107,7 @@ def send_kafka(tempo,mongoid):
     y=json.dumps(x)
     producer.send(producer_topic, y.encode('utf-8'))    
 
-myclient = MongoClient("mongodb://10.0.10.1:27017/")
+myclient = MongoClient("mongodb://10.0.10.5:27017/")
 mydb = myclient["leonardo"]
 mycol = mydb["leonardostream"]
 
