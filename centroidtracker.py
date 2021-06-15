@@ -39,7 +39,8 @@ class CentroidTracker():
 		if len(rects) == 0:
 			# loop over any existing tracked objects and mark them
 			# as disappeared
-			for objectID in self.disappeared.keys():
+			new_disappeared = self.disappeared.copy()
+			for objectID in new_disappeared.keys():
 				self.disappeared[objectID] += 1
 
 				# if we have reached a maximum number of consecutive
