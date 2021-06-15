@@ -210,10 +210,10 @@ for message in consumer:
 
     # update our centroid tracker using the computed set of bounding
 	# box rectangles
-
+    objects = ct.update(rects)
     
     if is_screen:
-        objects = ct.update(rects)
+        
         k = 0
         is_screen = False
         # loop over the tracked objects
