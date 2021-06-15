@@ -142,6 +142,8 @@ for message in consumer:
     if (nome_video != message["name"]):
         nome_video = message["name"]
         frames = 0
+        ct = CentroidTracker()
+	
     
     frame = stringToRGB(message['data'])
     
