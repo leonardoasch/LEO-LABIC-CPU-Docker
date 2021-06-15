@@ -12,7 +12,7 @@ from kafka import KafkaProducer
 
 from centroidtracker import CentroidTracker
 
-
+from bson.objectid import ObjectId
 
 import sys
 import base64
