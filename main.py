@@ -128,6 +128,7 @@ nome_video = "none"
 ct = CentroidTracker()
 (H, W) = (None, None)
 
+is_screen = False
 
 for message in consumer:
     
@@ -172,6 +173,7 @@ for message in consumer:
                 label = "{}: {:.2f}%".format(CLASSES[idx], confidence * 100)      
                 #print("[INFO] {}".format(label))
                 rects.append(box.astype("int"))
+                is_screen = True
                 
                     
                 
@@ -208,15 +210,18 @@ for message in consumer:
 
     # update our centroid tracker using the computed set of bounding
 	# box rectangles
-    objects = ct.update(rects)
-    k = 0
 
-	# loop over the tracked objects
-    for (objectID, centroid) in objects.items():
-        # draw both the ID of the object and the centroid of the
-        # object on the output frame
-        mycol.update_one({'_id': ObjectId(inserts[k])}, {'$set': {"trackid": objectID}})
-        k = k + 1
+    
+    if is_screen:
+        objects = ct.update(rects)
+        k = 0
+        is_screen = False
+        # loop over the tracked objects
+        for (objectID, centroid) in objects.items():
+            # draw both the ID of the object and the centroid of the
+            # object on the output frame
+            mycol.update_one({'_id': ObjectId(inserts[k])}, {'$set': {"trackid": objectID}})
+            k = k + 1
         
     #end_time = time.time()
     frames += 1
